@@ -2,8 +2,8 @@ import tensorflow as tf
 import math
 
 bst0 = tf.Variable(50, name='bst0', dtype=tf.float32)
-tst0 = tf.Variable(5, name='tst0', dtype=tf.float32)
-tsk0 = tf.Variable(5, name='tsk0', dtype=tf.float32)
+tst0 = tf.Variable(50, name='tst0', dtype=tf.float32)
+tsk0 = tf.Variable(50, name='tsk0', dtype=tf.float32)
 bsk = tf.constant(200, dtype=tf.float32)
 T2 = bsk
 
@@ -62,7 +62,7 @@ loss2 = tf.cond(matRes >= 1.1, lambda: loss1, lambda: tf.add(loss1, tf.divide(tf
 
 loss = tf.add(area, loss2)
 
-opt = tf.train.GradientDescentOptimizer(0.0035)
+opt = tf.train.GradientDescentOptimizer(0.35)
 train = opt.minimize(loss)
 
 sess = tf.Session()
@@ -70,7 +70,7 @@ sess = tf.Session()
 init = tf.global_variables_initializer()
 sess.run(init)
 
-for step in range(4000):
+for step in range(400000):
     sess.run(train)
     if step % 10 == 0:
         print(step, sess.run(bsk), sess.run(tsk), sess.run(bst), sess.run(tst), sess.run(area), sess.run(loss))
