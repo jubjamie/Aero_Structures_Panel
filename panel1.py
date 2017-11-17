@@ -37,12 +37,15 @@ Nst = tf.multiply(Et, epsilont)
 
 Nxmat = tf.multiply(Et, maxstrain)
 
-ZEAZ = tf.multiply(H12, tf.multiply(AA9, tf.multiply(U14, tf.add((tf.divide(P4,2), tf.divide(AA9,2))))))
+ZEAZ = tf.multiply(H12, tf.multiply(AA9, tf.multiply(U14, tf.add(tf.divide(P4,2), tf.divide(AA9,2)))))
 ZEA = tf.add(tf.multiply(H12, tf.multiply(AA9, U14)), tf.multiply(H10, tf.multiply(P4, T2)))
 zbar = tf.divide(ZEAZ, ZEA)
 D26 = zbar
 
-EIbar =tf.add((tf.divide(tf.multiply(H10, tf.multiply(T2,tf.pow(P4,3)))), 12), tf.add(tf.multiply(H10,tf.multiply(T2,tf.multiply(P4,tf.pow(D26,2)))), tf.add(tf.divide(tf.multiply(H12, tf.multiply(U14*tf.pow(AA9, 3))),12), tf.multiply(H12, tf.multiply(AA9, tf.multiply(U14, tf.pow((tf.add((tf.divide(AA9, 2)), tf.subtract((tf.divide(P4,2))), D26)),2)))))))
+EIbar = tf.add((tf.divide(tf.multiply(H10, tf.multiply(T2,tf.pow(P4,3))), 12)),
+               tf.add(tf.multiply(H10,tf.multiply(T2,tf.multiply(P4,tf.pow(D26,2)))),
+                      tf.add(tf.divide(tf.multiply(H12, tf.multiply(U14, tf.pow(AA9, 3))),12),
+                             tf.multiply(H12, tf.multiply(AA9, tf.multiply(U14, tf.pow((tf.add((tf.divide(AA9, 2)), tf.subtract((tf.divide(P4,2)), D26))),2)))))))
 NxEuler = tf.divide(tf.multiply(tf.pow(piVal,2), EIbar), tf.multiply(tf.pow(ribSpace,2),T2))
 
 NxSafe = tf.divide(tf.multiply(1.5, mref), tf.multiply(0.1,tf.multiply(0.4,tf.pow(ibchord,2))))
@@ -53,7 +56,7 @@ matRes = tf.div(Nxmat, NxSafe)
 EulerRes = tf.divide(NxEuler, NxSafe)
 
 area = tf.add(tf.multiply(tsk, bsk), tf.multiply(tst, bst))
-loss0 = tf.add(tf.divide(tf.abs(tf.subtract(1, skRes)), 0.002), tf.divide(tf.abs(tf.subtract(1, stRes)), 0.002))
+loss0 = tf.add(tf.divide(tf.abs(tf.subtract(1.0, skRes)), 0.002), tf.divide(tf.abs(tf.subtract(1.0, stRes)), 0.002))
 loss1 = tf.cond(EulerRes >= 1.1, loss0, lambda: tf.add(loss0, tf.divide(tf.abs(tf.subtract(1.1,EulerRes)), 0.002)))
 loss2 = tf.cond(matRes >= 1.1, loss1, lambda: tf.add(loss1, tf.divide(tf.abs(tf.subtract(1.1,matRes)), 0.002)))
 
