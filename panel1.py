@@ -58,3 +58,16 @@ loss1 = tf.cond(EulerRes >= 1.1, loss0, lambda: tf.add(loss0, tf.divide(tf.abs(t
 loss2 = tf.cond(matRes >= 1.1, loss1, lambda: tf.add(loss1, tf.divide(tf.abs(tf.subtract(1.1,matRes)), 0.002)))
 
 loss = tf.add(area, loss2)
+
+opt = tf.train.GradientDescentOptimizer(0.0035)
+train = opt.minimize(loss)
+
+sess = tf.Session()
+
+init = tf.global_variables_initializer()
+sess.run(init)
+
+for step in range(4000):
+    sess.run(train)
+    if step % 10 == 0:
+        print(step, sess.run(bsk), sess.run(tsk), sess.run(bst), sess.run(tst), sess.run(area), sess.run(loss))
