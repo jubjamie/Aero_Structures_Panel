@@ -57,8 +57,8 @@ EulerRes = tf.divide(NxEuler, NxSafe)
 
 area = tf.add(tf.multiply(tsk, bsk), tf.multiply(tst, bst))
 loss0 = tf.add(tf.divide(tf.abs(tf.subtract(1.0, skRes)), 0.002), tf.divide(tf.abs(tf.subtract(1.0, stRes)), 0.002))
-loss1 = tf.cond(EulerRes >= 1.1, loss0, lambda: tf.add(loss0, tf.divide(tf.abs(tf.subtract(1.1,EulerRes)), 0.002)))
-loss2 = tf.cond(matRes >= 1.1, loss1, lambda: tf.add(loss1, tf.divide(tf.abs(tf.subtract(1.1,matRes)), 0.002)))
+loss1 = tf.cond(EulerRes >= 1.1, lambda: loss0, lambda: tf.add(loss0, tf.divide(tf.abs(tf.subtract(1.1,EulerRes)), 0.002)))
+loss2 = tf.cond(matRes >= 1.1, lambda: loss1, lambda: tf.add(loss1, tf.divide(tf.abs(tf.subtract(1.1,matRes)), 0.002)))
 
 loss = tf.add(area, loss2)
 
