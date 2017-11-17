@@ -1,29 +1,29 @@
 import tensorflow as tf
 import math
 
-bst0 = tf.Variable(50,name='bst0')
-tst0 = tf.Variable(5, name='tst0')
-tsk0 = tf.Variable(5, name='tsk0')
-bsk = tf.constant(200)
+bst0 = tf.Variable(50, name='bst0', dtype=tf.float32)
+tst0 = tf.Variable(5, name='tst0', dtype=tf.float32)
+tsk0 = tf.Variable(5, name='tsk0', dtype=tf.float32)
+bsk = tf.constant(200, dtype=tf.float32)
 T2 = bsk
 
-tsk = tf.clip_by_value(tsk0, 0.5, 100)
+tsk = tf.clip_by_value(tsk0, 0.5, 100.0)
 P4 = tsk
-tst = tf.clip_by_value(tst0, 0.5, 100)
+tst = tf.clip_by_value(tst0, 0.5, 100.0)
 U14 = tst
-bst = tf.clip_by_value(bst0, 0.5, 100)
+bst = tf.clip_by_value(bst0, 0.5, 100.0)
 AA9 = bst
 
 mref = tf.constant(93.566)
 ibchord = tf.constant(3.333333)
-Esk = tf.constant(72)
+Esk = tf.constant(72, dtype=tf.float32)
 H10 = Esk
-Est = tf.constant(88)
+Est = tf.constant(88, dtype=tf.float32)
 H12 = Est
 kk = tf.constant(2.3)
 kt = tf.constant(0.18)
 maxstrain = tf.constant(0.0036)
-ribSpace = tf.constant(1200)
+ribSpace = tf.constant(1200, dtype=tf.float32)
 piVal = tf.constant(math.pi)
 
 epsilonk = tf.multiply(kk, tf.pow(tf.divide(tsk, bsk), 2))
