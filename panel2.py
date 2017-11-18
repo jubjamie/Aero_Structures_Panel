@@ -77,7 +77,7 @@ def tester(dim):
 def callbackMonitor(dim):
     print(dim, area(dim))
 
-print(tester([47.5, 3.3468, 3.94]))
+# print(tester([47.5, 3.3468, 3.94]))
 
 conds = ({'type': 'eq', 'fun': skinBuckle},
          {'type': 'eq', 'fun': stiffenerBuckle},
@@ -86,5 +86,5 @@ conds = ({'type': 'eq', 'fun': skinBuckle},
 
 bnds = ((0, None), (0, None), (0, None))
 
-res = minimize(area, [50, 5, 5], method='SLSQP', bounds=bnds, constraints=conds, callback=callbackMonitor)
+res = minimize(area, [90, 10, 10], method='SLSQP', bounds=bnds, constraints=conds, callback=callbackMonitor)
 print(res)
