@@ -1,5 +1,6 @@
 from scipy.optimize import minimize
 import math
+import matplotlib.pyplot as plt
 
 mref = 93.566
 ibchord = 3.333
@@ -12,6 +13,8 @@ ribSpace = 1200
 bsk = 200
 
 Nx = 1.5*mref/(0.1*0.4*ibchord*ibchord*1000)
+
+dimRecord = []
 
 def area(dim):
     bst = dim[0]
@@ -75,6 +78,7 @@ def tester(dim):
 
 
 def callbackMonitor(dim):
+    dimRecord.append(dim)
     print(dim, area(dim))
 
 # print(tester([47.5, 3.3468, 3.94]))
@@ -87,4 +91,8 @@ conds = ({'type': 'eq', 'fun': skinBuckle},
 bnds = ((0, None), (0, None), (0, None))
 
 res = minimize(area, [90, 10, 10], method='SLSQP', bounds=bnds, constraints=conds, callback=callbackMonitor)
-print(res)
+print(tester(res['x']))
+
+plt.plot([bst[0] for bst in dimRecord])
+plt.ylabel('bst Attempts')
+plt.show()
