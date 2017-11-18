@@ -14,7 +14,10 @@ bsk = 200
 
 Nx = 1.5*mref/(0.1*0.4*ibchord*ibchord*1000)
 
-dimRecord = []
+bstRecord = []
+tstRecord = []
+tskRecord = []
+areaRecord = []
 
 def area(dim):
     bst = dim[0]
@@ -78,7 +81,10 @@ def tester(dim):
 
 
 def callbackMonitor(dim):
-    dimRecord.append(dim)
+    bstRecord.append(dim[0])
+    tstRecord.append(dim[1])
+    tskRecord.append(dim[2])
+    areaRecord.append(area(dim))
     print(dim, area(dim))
 
 # print(tester([47.5, 3.3468, 3.94]))
@@ -93,6 +99,17 @@ bnds = ((0, None), (0, None), (0, None))
 res = minimize(area, [90, 10, 10], method='SLSQP', bounds=bnds, constraints=conds, callback=callbackMonitor)
 print(tester(res['x']))
 
-plt.plot([bst[0] for bst in dimRecord])
-plt.ylabel('bst Attempts')
+print(bstRecord)
+
+fig, ax1 = plt.subplots()
+ax1.plot(bstRecord, 'b-')
+ax1.set_xlabel('Iteration')
+ax1.set_ylabel('Value Attempt', color='b')
+ax1.tick_params('y', colors='b')
+
+ax2 = ax1.twinx()
+ax2.plot(areaRecord, 'r-')
+ax2.set_ylabel('Area', color='r')
+ax2.tick_params('y', colors='r')
+
 plt.show()
