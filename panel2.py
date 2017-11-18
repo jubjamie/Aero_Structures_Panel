@@ -1,6 +1,7 @@
 from scipy.optimize import minimize
 import math
 import matplotlib.pyplot as plt
+import numpy as np
 
 mref = 93.566
 ibchord = 3.333
@@ -99,13 +100,24 @@ bnds = ((0, None), (0, None), (0, None))
 res = minimize(area, [90, 10, 10], method='SLSQP', bounds=bnds, constraints=conds, callback=callbackMonitor)
 print(tester(res['x']))
 
-print(bstRecord)
+bstRecordAdjust = [float(k)/10 for k in bstRecord]
+
+major_ticks1 = np.arange(3, 10, 1)
+minor_ticks1 = np.arange(3, 10, 0.25)
+major_ticks2 = np.arange(900, 2000, 100)
+minor_ticks2 = np.arange(500, 2000, 50)
+
 
 fig, ax1 = plt.subplots()
-ax1.plot(bstRecord, 'b-')
+ax1.plot(bstRecordAdjust, 'b-', label='bst cm')
+ax1.plot(tstRecord, 'g--', label='tst mm')
+ax1.plot(tskRecord, 'c-.', label='tsk mm')
 ax1.set_xlabel('Iteration')
 ax1.set_ylabel('Value Attempt', color='b')
+ax1.set_yticks(major_ticks1)
+ax1.set_yticks(minor_ticks1, minor=True)
 ax1.tick_params('y', colors='b')
+ax1.legend(loc='upper right', shadow=True)
 
 ax2 = ax1.twinx()
 ax2.plot(areaRecord, 'r-')
