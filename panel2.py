@@ -73,4 +73,18 @@ def tester(dim):
     print("Mat Fail RSF: " + str(matFail(dim)+1.1))
     print("Euler Fail RSF: " + str(eulerBuckle(dim)+1.1))
 
+
+def callbackMonitor(dim):
+    print(dim, area(dim))
+
 print(tester([47.5, 3.3468, 3.94]))
+
+conds = ({'type': 'eq', 'fun': skinBuckle},
+         {'type': 'eq', 'fun': stiffenerBuckle},
+         {'type': 'ineq', 'fun': matFail},
+         {'type': 'ineq', 'fun': eulerBuckle})
+
+bnds = ((0, None), (0, None), (0, None))
+
+res = minimize(area, [50, 5, 5], method='SLSQP', bounds=bnds, constraints=conds, callback=callbackMonitor)
+print(res)
