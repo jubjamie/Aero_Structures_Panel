@@ -183,4 +183,5 @@ ax2.plot(massRecord, 'r-')
 ax2.set_ylabel('Unit Mass', color='r')
 ax2.tick_params('y', colors='r')
 
+# Create matplotlib windows with GUI
 plt.show()
