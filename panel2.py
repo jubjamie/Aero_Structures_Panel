@@ -179,6 +179,7 @@ ax1.set_yticks(major_ticks1)
 ax1.set_yticks(minor_ticks1, minor=True)
 ax1.tick_params('y', colors='b')
 ax1.legend(loc='upper right', shadow=True)
+ax1.set_title("All-In-One Optimisation of Parameters. Best Mass: " + str(format(mass(res['x']), '.3f')) + " kg")
 
 # Plot 2nd y-axis graph
 ax2 = ax1.twinx()
