@@ -10,6 +10,7 @@ Est = 88
 kk = 2.3
 kt = 0.18
 maxstrain = 0.0036
+density = 1600
 ribSpace = 1200
 bsk = 200
 
@@ -20,13 +21,17 @@ tstRecord = []
 tskRecord = []
 areaRecord = []
 
-def area(dim):
+def mass(dim):
     bst = dim[0]
     tst = dim[1]
     tsk = dim[2]
 
     panel_area = (bsk*tsk) + (bst * tst)
-    return panel_area
+    unitvol = panel_area*1000
+    unitvolm = unitvol/1000000000
+    panelmass = unitvolm * density
+    unitmass = panelmass / (bsk/1000)
+    return unitmass
 
 def skinBuckle(dim):
     bst = dim[0]
@@ -74,7 +79,7 @@ def eulerBuckle(dim):
 
 
 def tester(dim):
-    print("Area: " + str(area(dim)))
+    print("Area: " + str(mass(dim)))
     print("Skin Buckle RSF: " + str(skinBuckle(dim)+1))
     print("Stiffener Buckle RSF: " + str(stiffenerBuckle(dim)+1))
     print("Mat Fail RSF: " + str(matFail(dim)+1.1))
@@ -85,8 +90,8 @@ def callbackMonitor(dim):
     bstRecord.append(dim[0])
     tstRecord.append(dim[1])
     tskRecord.append(dim[2])
-    areaRecord.append(area(dim))
-    print(dim, area(dim))
+    areaRecord.append(mass(dim))
+    print(dim, mass(dim))
 
 # print(tester([47.5, 3.3468, 3.94]))
 
@@ -97,7 +102,7 @@ conds = ({'type': 'eq', 'fun': skinBuckle},
 
 bnds = ((0, None), (0, None), (0, None))
 
-res = minimize(area, [90, 10, 10], method='SLSQP', bounds=bnds, constraints=conds, callback=callbackMonitor)
+res = minimize(mass, [90, 15, 15], method='SLSQP', bounds=bnds, constraints=conds, callback=callbackMonitor)
 print(tester(res['x']))
 
 bstRecordAdjust = [float(k)/10 for k in bstRecord]
@@ -121,7 +126,7 @@ ax1.legend(loc='upper right', shadow=True)
 
 ax2 = ax1.twinx()
 ax2.plot(areaRecord, 'r-')
-ax2.set_ylabel('Area', color='r')
+ax2.set_ylabel('Unit Mass', color='r')
 ax2.tick_params('y', colors='r')
 
 plt.show()
