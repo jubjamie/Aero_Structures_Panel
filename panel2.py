@@ -13,6 +13,7 @@ maxstrain = 0.0036  # m/m
 density = 1600  # kg/m3 (of CFRP)
 ribSpace = 1200  # mm
 bsk = 200  # mm
+flangewidth = 35
 
 Nx = 1.5*mref/(0.1*0.4*ibchord*ibchord*1000)  # Safe Nx with 1.5 Safety Factor
 
@@ -33,7 +34,7 @@ def mass(dim):
     tst = dim[1]
     tsk = dim[2]
 
-    panel_area = (bsk*tsk) + (bst * tst)  # Panel Surface Area
+    panel_area = (bsk*tsk) + (bst*tst) + (flangewidth*tst)  # Panel Surface Area
     unitvol = panel_area*1000  # mm3
     unitvolm = unitvol/1000000000  # m3
     panelmass = unitvolm * density  # kg
