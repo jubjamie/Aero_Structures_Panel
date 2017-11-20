@@ -158,6 +158,8 @@ bnds = ((0, None), (0, None), (0, None))  # Define all solutions to be non-negat
 # Main Optimiser Function
 res = minimize(mass, [90, 15, 15], method='SLSQP', bounds=bnds, constraints=conds, callback=callbackMonitor)
 
+print(tester(res['x']))
+
 bstRecordAdjust = [float(k)/10 for k in bstRecord]  # Convert bst to cm to fit on graph nicely.
 
 # Define tick for graphing
