@@ -16,7 +16,6 @@ bsk = 200  # mm
 
 Nx = 1.5*mref/(0.1*0.4*ibchord*ibchord*1000)  # Safe Nx with 1.5 Safety Factor
 
-
 # Storage for iteration results
 bstRecord = []
 tstRecord = []
@@ -178,6 +177,7 @@ ax1.set_yticks(minor_ticks1, minor=True)
 ax1.tick_params('y', colors='b')
 ax1.legend(loc='upper right', shadow=True)
 
+# Plot 2nd y-axis graph
 ax2 = ax1.twinx()
 ax2.plot(massRecord, 'r-')
 ax2.set_ylabel('Unit Mass', color='r')
