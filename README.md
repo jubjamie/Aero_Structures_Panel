@@ -2,4 +2,4 @@
 This code optimises a T-Stiffened Compression Panel for a certain c/w scenario.
 
 ## Example Optimisation
-![Example Optimisation](/optimisation2.png?raw=true Example Optimisation")
+![Example Optimisation](optimisation2.png?raw=true Example Optimisation")
