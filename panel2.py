@@ -22,6 +22,10 @@ bstRecord = []
 tstRecord = []
 tskRecord = []
 massRecord = []
+rsfSkinRecord = []
+rsfStiffRecord = []
+rsfMatRecord = []
+rsfEulerRecord = []
 
 
 def mass(dim):
@@ -144,6 +148,10 @@ def callbackMonitor(dim):
     tstRecord.append(dim[1])
     tskRecord.append(dim[2])
     massRecord.append(mass(dim))
+    rsfSkinRecord.append(skinBuckle(dim)+1)
+    rsfStiffRecord.append(stiffenerBuckle(dim)+1)
+    rsfMatRecord.append(matFail(dim)+1.1)
+    rsfEulerRecord.append(eulerBuckle(dim)+1.1)
     print(dim, mass(dim))
 
 
@@ -159,6 +167,7 @@ bnds = ((0, None), (0, None), (0, None))  # Define all solutions to be non-negat
 res = minimize(mass, [90, 15, 15], method='SLSQP', bounds=bnds, constraints=conds, callback=callbackMonitor)
 
 print(tester(res['x']))
+print(res)
 
 bstRecordAdjust = [float(k)/10 for k in bstRecord]  # Convert bst to cm to fit on graph nicely.
 
@@ -169,23 +178,40 @@ major_ticks2 = np.arange(900, 2000, 100)
 minor_ticks2 = np.arange(500, 2000, 50)
 
 # Plot graphs
-fig, ax1 = plt.subplots()
-ax1.plot(bstRecordAdjust, 'b-', label='bst cm')
-ax1.plot(tstRecord, 'g--', label='tst mm')
-ax1.plot(tskRecord, 'c-.', label='tsk mm')
-ax1.set_xlabel('Iteration')
-ax1.set_ylabel('Value Attempt', color='b')
-ax1.set_yticks(major_ticks1)
-ax1.set_yticks(minor_ticks1, minor=True)
-ax1.tick_params('y', colors='b')
-ax1.legend(loc='upper right', shadow=True)
-ax1.set_title("All-In-One Optimisation of Parameters. Best Mass: " + str(format(mass(res['x']), '.3f')) + " kg")
+plt.figure(1)
+plt.plot(bstRecordAdjust, 'b-', label='bst cm')
+plt.plot(tstRecord, 'g--', label='tst mm')
+plt.plot(tskRecord, 'c-.', label='tsk mm')
+plt.xlabel('Iteration')
+plt.ylabel('Value Attempt', color='b')
+plt.yticks(major_ticks1)
+plt.tick_params('y', colors='b')
+plt.legend(loc='upper right', shadow=True)
+plt.grid(True)
+plt.title("Change of dimensions Over Iterations - Best Mass: " + str(format(mass(res['x']), '.3f')) + " kg")
 
-# Plot 2nd y-axis graph
-ax2 = ax1.twinx()
-ax2.plot(massRecord, 'r-')
-ax2.set_ylabel('Unit Mass', color='r')
-ax2.tick_params('y', colors='r')
+
+plt.figure(2)
+plt.plot(massRecord, 'r-', label='Unit Mass')
+plt.xlabel('Iteration')
+plt.ylabel('Value Attempt', color='r')
+# plt.yticks(major_ticks1)
+plt.tick_params('y', colors='r')
+plt.legend(loc='upper right', shadow=True)
+plt.grid(True)
+plt.title("Change of Unit Mass Over Iterations. Best Mass: " + str(format(mass(res['x']), '.3f')) + " kg")
+
+plt.figure(3)
+plt.plot(rsfSkinRecord, 'b-', label='Skin Buckling')
+plt.plot(rsfStiffRecord, 'g--', label='Stiffener Buckling')
+plt.plot(rsfMatRecord, 'c-.', label='Material Failure')
+plt.plot(rsfEulerRecord, 'k:', label='Euler Buckling')
+plt.xlabel('Iteration')
+plt.ylabel('Reserve Factor', color='b')
+plt.tick_params('y', colors='b')
+plt.legend(loc='upper right', shadow=True)
+plt.grid(True)
+plt.title("Reserve Factors Over Iterations - Best Mass: " + str(format(mass(res['x']), '.3f')) + " kg")
 
 # Create matplotlib windows with GUI
 plt.show()
