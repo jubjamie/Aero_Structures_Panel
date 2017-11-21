@@ -178,6 +178,7 @@ major_ticks2 = np.arange(900, 2000, 100)
 minor_ticks2 = np.arange(500, 2000, 50)
 
 # Plot graphs
+plt.xkcd()
 plt.figure(1)
 plt.plot(bstRecordAdjust, 'b-', label='bst cm')
 plt.plot(tstRecord, 'g--', label='tst mm')
