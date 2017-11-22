@@ -7,20 +7,22 @@ tref = [0, 2.312783988, 6.13595752, -215.4845505, -207.5078057, -499.9967706, -4
 
 wingtipdistance = [0, 1.5, 4.5, 7.5, 10.5, 13.5, 16.5, 18, 18, 20]
 
-srefLastGrad = sref[-1]/sref[-2]
-srefEnd6 = sref[-1] + (wingtipdistance[-2] - wingtipdistance[-3])*srefLastGrad
+srefLastGrad = (sref[-1]-sref[-2])/(wingtipdistance[-4]-wingtipdistance[-5])
+print(srefLastGrad)
+srefEnd6 = sref[-1] + (wingtipdistance[-3] - wingtipdistance[-4])*srefLastGrad
+print(srefEnd6)
 sref.append(srefEnd6)
 sref.append(0)
 sref.append(0)
 
-mrefLastGrad = mref[-1]/mref[-2]
-mrefEnd6 = mref[-1] + (wingtipdistance[-2] - wingtipdistance[-3])*mrefLastGrad
+mrefLastGrad = (mref[-1]-mref[-2])/(wingtipdistance[-4]-wingtipdistance[-5])
+mrefEnd6 = mref[-1] + (wingtipdistance[-3] - wingtipdistance[-4])*mrefLastGrad
 mref.append(mrefEnd6)
 mref.append(mrefEnd6)
 mref.append(mrefEnd6)
 
-trefLastGrad = tref[-1]/tref[-2]
-trefEnd6 = tref[-1] + (wingtipdistance[-2] - wingtipdistance[-3])*trefLastGrad
+trefLastGrad = (tref[-1]-tref[-2])/(wingtipdistance[-4]-wingtipdistance[-5])
+trefEnd6 = tref[-1] + (wingtipdistance[-3] - wingtipdistance[-4])*trefLastGrad
 tref.append(trefEnd6)
 tref.append(trefEnd6)
 tref.append(trefEnd6)
