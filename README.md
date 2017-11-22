@@ -13,4 +13,11 @@ As parameters are changed and graphs edited, the figures below will update to sh
 ![Mass Optimisation](mass.png?raw=true "Example Optimisation")
 ![Reserve Factors](rsf.png?raw=true "Example Optimisation")
 
+## Current Loading Plots
+Graphs here will update with styling and data changes automatically.
+![Sref](sref1.png?raw=true "Example Optimisation")
+![Mref](mref1.png?raw=true "Example Optimisation")
+![Tref](tref1.png?raw=true "Example Optimisation")
+
+
 &copy; Jamie Cooke 2017
